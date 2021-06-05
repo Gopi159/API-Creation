@@ -8,6 +8,7 @@ const port = process.env.PORT;
 
 //Parsing data from Body
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //Import Routes
 app.use("/api/v1", productRoute);
