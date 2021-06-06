@@ -2,7 +2,7 @@ const express = require("express");
 require("dotenv/config");
 require("mongoose");
 const productRoute = require("./src/api/products");
-require("./src/Database");
+require("./src/database");
 const app = express();
 const port = process.env.PORT;
 const router = express.Router();
