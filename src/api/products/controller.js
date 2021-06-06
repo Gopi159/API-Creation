@@ -51,32 +51,33 @@ exports.update = function (req, res) {
 };
 
 exports.getAll = function (req, res) {
-  Product.aggregate(
-    [
-      {
-        $project: {
-          productName: "$name",
-          productPrice: "$price",
-          productDescription: "$description",
-          productId: "$_id",
-          addedOn: "$createdAt",
-          productStatus: {
-            $cond: {
-              if: { $eq: ["$status", true] },
-              then: "Active",
-              else: "Not Active",
+  try {
+    Product.aggregate(
+      [
+        {
+          $project: {
+            productName: "$name",
+            productPrice: "$price",
+            productDescription: "$description",
+            productId: "$_id",
+            addedOn: "$createdAt",
+            productStatus: {
+              $cond: {
+                if: { $eq: ["$status", true] },
+                then: "Active",
+                else: "Not Active",
+              },
             },
           },
         },
-      },
-    ],
-    function (err, products) {
-      if (err) {
-        res.status(code.SERVER_ERROR).json({
-          message: "We are Unable to get Products. Please try after sometime",
-        });
-      }
-      try {
+      ],
+      function (err, products) {
+        if (err) {
+          res.status(code.SERVER_ERROR).json({
+            message: "We are Unable to get Products. Please try after sometime",
+          });
+          return;
+        }
         if (products.length == 0) {
           res.status(code.NOT_FOUND_STATUS_).json({
             message: "No Products Found",
@@ -86,11 +87,13 @@ exports.getAll = function (req, res) {
         res.status(code.SUCCESS_STATUS).json({
           data: products,
         });
-      } catch (err) {
-        throw err;
       }
-    }
-  );
+    );
+  } catch (err) {
+    res.status(code.SERVER_ERROR).json({
+      message: "We are Unable to get Products. Please try after sometime",
+    });
+  }
 };
 
 exports.getById = function (req, res) {
