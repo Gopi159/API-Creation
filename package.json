@@ -1,12 +1,12 @@
 {
-  "name": "testscoreapi",
+  "name": "my-products",
   "version": "1.0.0",
-  "description": "",
+  "description": "My product API backend created by Gopi Jagan using NodeJS and MongoDB",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js"
   },
-  "author": "",
+  "author": "Gopi159",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^10.0.0",
